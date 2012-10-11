@@ -1,6 +1,8 @@
 *.aux
 *.bbl
 *.blg
+*.cb
+*.cb2
 *.dvi
 *.fdb_latexmk
 *.glg
@@ -16,6 +18,7 @@
 *.nav
 *.nlo
 *.out
+*.pdf
 *.pdfsync
 *.ps
 *.snm
