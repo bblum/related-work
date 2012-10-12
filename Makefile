@@ -1,6 +1,6 @@
 all: related
 
-related: related.tex bib
+related: bib related.tex
 	pdflatex related.tex
 	pdflatex related.tex
 

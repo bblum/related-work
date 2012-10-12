@@ -45,10 +45,25 @@
 
 \abstract{This document is intended to be a collection of summaries of publications and other related work I read in the course of my research.}
 
-\section{Systematic Testing}
+\section{Bugs}
+
+\subsection{Systematic Testing}
 \begin{itemize}
-	\item \cite{Landslide} is my MS thesis. I wrote it and Garth advised.
+	\item Landslide \cite{Landslide} is my MS thesis. I wrote it and Garth advised.
 \end{itemize}
+
+\subsection{Bug Fixing}
+\begin{itemize}
+	\item CFix \cite{cfix} uses existing concurrency bug detectors to obtain bad traces, and generates patches to fix those bugs. Its fix strategies are mutual exclusion enforcement (for which they use AFix, an existing tool) and order enforcement (for which they contribute OFix). They also merge patches and select for the simplest patches which get the job done.
+\end{itemize}
+
+\subsection{Stability}
+\begin{itemize}
+	\item Eve \cite{eve} is a mechanism for state machine replication in multicore servers. I have a hard time telling what their actual mechanism is, but they do away with the deterministic record-replay approach largely for performance reasons. They claim to provide system liveness despite the existence of some given number of concurrency faults.
+\end{itemize}
+
+\section{Other}
+
 
 \bibliography{citations}{}
 \bibliographystyle{alpha}
