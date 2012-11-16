@@ -45,11 +45,40 @@
 
 \abstract{This document is intended to be a collection of summaries of publications and other related work I read in the course of my research.}
 
-\section{Bugs}
+\section{Testing}
 
-\subsection{Systematic Testing}
+\subsection{Systematic Exploration}
 \begin{itemize}
 	\item Landslide \cite{Landslide} is my MS thesis. I wrote it and Garth advised.
+\end{itemize}
+
+\subsection{Symbolic Execution}
+\begin{itemize}
+	\item S$^2$E \cite{s2e}
+\end{itemize}
+
+\subsection{Kernels and Device Drivers}
+\begin{itemize}
+	\item SymDrive \cite{symdrive}
+\end{itemize}
+
+\section{Static Analysis}
+
+\subsection{Constraint Solving}
+\begin{itemize}
+	\item {\sc Kint} \cite{kint} is a framework for finding integer errors (overflow, divide-by-zero, shifting, truncation, sign misinterpretation) in C. Their related work section is at the beginning. They have an enormous table of bugs that were found, with columns denoting e.g. impact (OOB write, DoS, etc), attack vector (userspace, disk, etc), and how many times people had previously tried but failed to fix the bug.
+
+		Garth noted that most of {\sc Kint}'s techniques are all well-known static analysis techniques -- taint flow, bounds checks insertions, etc., and the contribution is more in how they are put together.
+		Their other novel contribution (which I think is cooler, in the ``change the way people program'' sense) is the NaN integer semantics.
+		Basically, once an integer overflows (or something else bad(?)) it gains ``NaN taint'' (in other words, the NaN value is ``sticky'').
+		The implementation (currently only for unsigned ints) reserves {\tt UINT\_MAX} for the NaN value (which I worry about) and uses x86's {\tt jno} instruction, for minimal overhead.
+\end{itemize}
+
+
+\section{Stability}
+\subsection{Replication and Redundancy}
+\begin{itemize}
+	\item Eve \cite{eve} is a mechanism for state machine replication in multicore servers. I have a hard time telling what their actual mechanism is, but they do away with the deterministic record-replay approach largely for performance reasons. They claim to provide system liveness despite the existence of some given number of concurrency faults.
 \end{itemize}
 
 \subsection{Bug Fixing}
@@ -57,10 +86,6 @@
 	\item CFix \cite{cfix} uses existing concurrency bug detectors to obtain bad traces, and generates patches to fix those bugs. Its fix strategies are mutual exclusion enforcement (for which they use AFix, an existing tool) and order enforcement (for which they contribute OFix). They also merge patches and select for the simplest patches which get the job done.
 \end{itemize}
 
-\subsection{Stability}
-\begin{itemize}
-	\item Eve \cite{eve} is a mechanism for state machine replication in multicore servers. I have a hard time telling what their actual mechanism is, but they do away with the deterministic record-replay approach largely for performance reasons. They claim to provide system liveness despite the existence of some given number of concurrency faults.
-\end{itemize}
 
 \section{Other}
 
