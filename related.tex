@@ -59,8 +59,9 @@
 		TODO
 
 	\item SymDrive \cite{symdrive} is a mechanism that focuses on kernel device drivers, primarily to address the challenge of not being able to test code for esoteric devices for lack of testing hardware. It is built on top of S$^2$E, described above.
+		The ability to test device drivers comes from using symbolic data as input from the devices (though it's not clear to what extent this covers all possible device behaviours, since they admit later to not being able to anticipate certain esoteric patterns).
 
-		TODO
+		Their approach is solidly in the ``dynamic informal verification'' camp. Testing is largely driven by short, pluggable checkers, which seem to average 11 lines long among their 49 supplied ones. One that particularly interests me is the execution context checker, designed for precisely the Atomic All-Nighters bug. However, (a) they are vague about what is illegal besides {\tt GFP\_ATOMIC} vs {\tt GFP\_KERNEL} wrt {\tt kmalloc}, and (b) the check appears to be entirely dynamic, using a stack to track execution contexts each time a spinlock is taken, which means it can't possibly be more powerful than run-time asserts in Linux's scheduler.
 \end{itemize}
 
 \section{Static Analysis}
