@@ -54,14 +54,23 @@
 
 \subsection{Symbolic Execution}
 \begin{itemize}
-	\item S$^2$E \cite{s2e}
-
-		TODO
+	\item S$^2$E \cite{s2e} is a platform for selective symbolic execution. They identify a domain (set of modules of the program) for symbolic testing, such as a library, and straight-line execute everything else, such as the app and kernel. Their tool combines virtualisation, dynamic binary translation, operates directly on binaries ``in vivo'', and is freely downloadable.
 
 	\item SymDrive \cite{symdrive} is a mechanism that focuses on kernel device drivers, primarily to address the challenge of not being able to test code for esoteric devices for lack of testing hardware. It is built on top of S$^2$E, described above.
 		The ability to test device drivers comes from using symbolic data as input from the devices (though it's not clear to what extent this covers all possible device behaviours, since they admit later to not being able to anticipate certain esoteric patterns).
 
 		Their approach is solidly in the ``dynamic informal verification'' camp. Testing is largely driven by short, pluggable checkers, which seem to average 11 lines long among their 49 supplied ones. One that particularly interests me is the execution context checker, designed for precisely the Atomic All-Nighters bug. However, (a) they are vague about what is illegal besides {\tt GFP\_ATOMIC} vs {\tt GFP\_KERNEL} wrt {\tt kmalloc}, and (b) the check appears to be entirely dynamic, using a stack to track execution contexts each time a spinlock is taken, which means it can't possibly be more powerful than run-time asserts in Linux's scheduler.
+\end{itemize}
+
+\subsection{Invariant Analysis}
+\begin{itemize}
+	\item AVIO~\cite{avio} is a framework designed to detect high-level atomicity violations, eschewing data race detection. Their motivation section (a considerable chunk of the paper) makes a big deal of the ``Helgrind-clean does not mean correct'' problem, and they also make another good point: that in transaction-based models, data races will be even less of an issue.
+
+	Their analysis is implemented two ways, one way in hardware (extending the cache coherency protocol), less accurate but minimal overhead, and one way in software, more accurate with ``moderate'' overhead. It's built on a training-data model; AVIO starts by computing ``access interleaving invariants'' by analysing known-correct executions.
+
+	Extracting invariants from correct runs is done by first identifying all shared memory locations as ``invariants'', then pruning out locations that (they suppose) don't actually identify invariants by finding reordered accesses around them during known-good runs. They don't mention this, but I think this is hugely limiting in two ways: (1) it might introduce false negatives (e.g. if their training set doesn't have enough interleavings in it), and (2) is necessarily incompatible with interleavings which depend on multiple locations interacting.
+
+	Overall I was expecting from this paper a principled approach to reasoning about ``more general'' race conditions than just data races (given their expansive motivation section), but actually they've just identified another, disjoint, subset of races and built a specialised tool for finding just those.
 \end{itemize}
 
 \section{Static Analysis}
@@ -94,7 +103,6 @@
 \section{Future Reading}
 \begin{itemize}
 	\item ReVirt~\cite{revirt} deserves a skim.
-	\item AVIO~\cite{avio} looks interesting.
 \end{itemize}
 
 \bibliography{citations}{}
