@@ -85,6 +85,16 @@
 		The implementation (currently only for unsigned ints) reserves {\tt UINT\_MAX} for the NaN value (which I worry about) and uses x86's {\tt jno} instruction, for minimal overhead.
 \end{itemize}
 
+\subsection{Formal Verification}
+\begin{itemize}
+	\item {\sc Quark} \cite{quark} is a web browser with formally verified security guarantees. The technique, ``formal shim verification'', involves writing a small component of the browser, the ``kernel'', in a language which can be formally verified (in their case Coq), and reasoning about the properties it enforces about the rest of the codebase.
+
+		{\sc Quark} uses a message-passing system for tabs, which are separate processes running a hacked WebKit, to request and receive from the kernel, with messages such as {\tt GetUrl} and so on. The properties they verify are (1) tab non-interference (sort of a frame rule), (2) cookie integrity and confidentiality (which is stated based on a notion of each tab being authorised for only one particular domain, which forbids xss-type stuff), and (3) address bar integrity (the text in the URL bar never lies).
+
+		Because Coq is non-turing-complete (and isn't great for ``reactive'' nonterminating programs like browsers), they use an I/O+nontermination library for Coq called Ynot, which I think uses trusted unsafe code under the hood. In the end section, they talk about what comprises their ``Trusted Code Base'' (incl. Ynot, the OS, the compiler, etc), and also mention some security limitations that their model doesn't/can't provide.
+
+		I like this paper quite a bit.
+\end{itemize}
 
 \section{Stability}
 \subsection{Replication and Redundancy}
