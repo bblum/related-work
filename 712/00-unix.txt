@@ -1,0 +1,21 @@
+==== Praise ====
+
+I like the shell section (6), which in just a page and a half sets the mood for the UNIX-style command line environments we still use today (e.g., encouraging the use of chained piped processes rather than requiring programs to implement all sorts of optional flags).
+
+The perspective section is great. I wish more modern papers had a "perspective" section; these days we seem to scatter perspective throughout all the other sections.
+
+==== Criticisms ====
+
+I wish the "influences" (i.e. related work) section were longer. While the paper paints a great picture of what it's like to work in the UNIX environment, it's hard to tell just from this paper how much of that is novel, versus what it's like to work on e.g. multics.
+
+"There is about one crash every other day ... [sometimes caused by] inexplicable processor interrupts to random locations" boy, they're really setting a precedent for the phenomenon of "Research-quality software", aren't they? (That is, I wish they'd figured out what that was and debugged it!)
+
+==== Nitpicks ====
+
+The system's special treatment of the root directory is more special than the system's treatment of /bin, which (sec. 6) is just in the search path by convention of the shell.
+
+The "null filename" refers to the current directory, but so does "."?
+
+"If arbitrary linkes ... it would be difficult to detect when the last connection was severed" presumably this paper is written before hard-links, which work by refcounting? (Or are they talking about the circular refcount problem?)
+
+I guess the ".."-on-mounted-filesystems rule has changed since this paper (sec. 3.4).
