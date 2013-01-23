@@ -1,0 +1,21 @@
+This is a "what does the program actually spend most of its time doing?"
+performance paper in which they propose various new techniques to help with the
+observed bottlenecks. Based on the year and the fact that it's assigned in the
+first week of class, it would not surprise me if this were the first such paper
+of its type.
+
+==== Praise ====
+
+The paper does an excellent job justifying itself over previous related work, even in several passing mentions.
+
+I appreciate that they tried a bunch of different cache strategies, and looked at the performance of each one.
+
+==== Criticism ====
+
+I think their concluding speculation that write-once optical disks could possibly replace magnetic disks is handwaving at best. If a flush interval only has a tiny change since the last flush, you'd have to waste an entire CD on that one change. You could also be wasting plenty of storage, and never be able to recover the wasted space, for short-lived files like compiler-generated temp outputs.
+
+==== Nitpicks ====
+
+It's remarkable that papers from this far back take care to explain very
+familiar mechanisms. This one tells us what the semantics of an LRU cache are
+(and the UNIX paper told us how refcounting works).
