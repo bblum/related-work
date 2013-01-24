@@ -11,13 +11,20 @@ of its type.
 
 ==== Praise ====
 
-The paper does an excellent job justifying itself over previous related work, even in several passing mentions.
+The paper does an excellent job justifying itself over previous related work,
+even in several passing mentions.
 
-I appreciate that they tried a bunch of different cache strategies, and looked at the performance of each one.
+I appreciate that they tried a bunch of different cache strategies, and looked
+at the performance of each one.
 
 ==== Criticism ====
 
-I think their concluding speculation that write-once optical disks could possibly replace magnetic disks is handwaving at best. If a flush interval only has a tiny change since the last flush, you'd have to waste an entire CD on that one change. You could also be wasting plenty of storage, and never be able to recover the wasted space, for short-lived files like compiler-generated temp outputs.
+I think their concluding speculation that write-once optical disks could
+possibly replace magnetic disks is handwaving at best. If a flush interval only
+has a tiny change since the last flush, you'd have to waste an entire CD on
+that one change. You could also be wasting plenty of storage, and never be able
+to recover the wasted space, for short-lived files like compiler-generated temp
+outputs.
 
 ==== Nitpicks ====
 
