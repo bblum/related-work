@@ -1,3 +1,8 @@
+Ben Blum <bblum@andrew.cmu.edu>
+15-712
+
+Ritchie74, "the UNIX paper"
+
 ==== Praise ====
 
 I like the shell section (6), which in just a page and a half sets the mood for the UNIX-style command line environments we still use today (e.g., encouraging the use of chained piped processes rather than requiring programs to implement all sorts of optional flags).

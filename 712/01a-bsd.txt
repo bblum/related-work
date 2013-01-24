@@ -1,3 +1,8 @@
+Ben Blum <bblum@andrew.cmu.edu>
+15-712
+
+Ousterhout85, tracing the BSD file system
+
 This is a "what does the program actually spend most of its time doing?"
 performance paper in which they propose various new techniques to help with the
 observed bottlenecks. Based on the year and the fact that it's assigned in the

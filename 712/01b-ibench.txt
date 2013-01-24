@@ -1,3 +1,8 @@
+Ben Blum <bblum@andrew.cmu.edu>
+15-712
+
+Harter11, "A file is not a file (iBench)"
+
 This paper is essentially a long-delayed rebuttal to the Ousterhout85 paper.
 The claim is that the systems community understands server filesystem workloads
 quite well, and hence we've optimised (perhaps overfitted) our libraries and
