@@ -1,0 +1,10 @@
+==== Praise ====
+
+I like how, in spite of the lack of established data about what kind of workloads home users put out, they figure out their own parameters and also justify why the parameters are "probably" reflective of the typical workload (e.g., 400 2.5 MB photos would come from importing a full 1GB 12MP flash card).
+
+==== Criticism ====
+
+Why does automating the trace generation with AppleScript ensure reproducible results? Are the test traces somehow a conglomerate/average of many traces? How much nondeterminism is there in each task performed? (If there's any, what justification do we have that the traces in the suite are representative?)
+
+
+==== Nitpicks ====
