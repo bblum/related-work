@@ -1,10 +1,45 @@
+This paper is essentially a long-delayed rebuttal to the Ousterhout85 paper.
+The claim is that the systems community understands server filesystem workloads
+quite well, and hence we've optimised (perhaps overfitted) our libraries and
+filesystem algorithms to those workloads, while home application workloads are
+quite different. In addition to showing how different they are, they also
+provide a benchmark suite, "iBench", for the community to use in future work.
+
 ==== Praise ====
 
-I like how, in spite of the lack of established data about what kind of workloads home users put out, they figure out their own parameters and also justify why the parameters are "probably" reflective of the typical workload (e.g., 400 2.5 MB photos would come from importing a full 1GB 12MP flash card).
+I like how, in spite of the lack of established data about what kind of
+workloads home users put out, they figure out their own parameters and also
+justify why the parameters are "probably" reflective of the typical workload
+(e.g., 400 2.5 MB photos would come from importing a full 1GB 12MP flash card).
 
 ==== Criticism ====
 
-Why does automating the trace generation with AppleScript ensure reproducible results? Are the test traces somehow a conglomerate/average of many traces? How much nondeterminism is there in each task performed? (If there's any, what justification do we have that the traces in the suite are representative?)
+Why does automating the trace generation with AppleScript ensure reproducible
+results? Are the test traces somehow a conglomerate/average of many traces? How
+much nondeterminism is there in each task performed? (If there's any, what
+justification do we have that the traces in the suite are representative?)
 
+I doubt the relevance of some of the analyses. For example, S4.2.3 talks about
+how applications generally don't give useful preallocation hints, but this
+seems to have no impact on the paper's question of "how should FSes cope with
+home workloads?" -- they don't discuss preallocation apart from presenting the
+data, and it strikes me as an application's fault if it doesn't preallocate for
+good performance.
 
 ==== Nitpicks ====
+
+In 4.3.1, "Tasks synchronize small amounts of data frequently, presenting a
+challenge for file systems." What is this challenge? What room for improvement
+is there?
+
+In 4.3.2 (atomicity), "file systems will need to address the ensuing renames or
+provide an alternative mechanism" It took me a while to remember what the issue
+was here, but (for my own understanding) I note that the problem is that FSes
+can't optimize a file's placement based on its parent directory at creation
+time (which they said earlier in the paper).
+
+I find quite frightening the implication that a file system should understand
+that metadata accesses within a .doc file might serve as a prefetching hint for
+reading somewhere seemingly random in the same file. I'd suggest instead
+exposing more hinting interfaces for the application itself to use, so the FS's
+internal prediction can remain filetype-agnostic.
