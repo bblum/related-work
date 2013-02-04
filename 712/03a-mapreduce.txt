@@ -1,0 +1,43 @@
+Ben Blum <bblum@andrew.cmu.edu>
+15-712
+
+Dean'04, GFS
+
+==== Praise ====
+
+The paper is very easy to follow. Like the GFS paper, they spend (waste) no time
+on motivating the need for the tool, but also their overall structure (interface
+example, design diagram, operational semantics, resource management,
+performance) helps the flow.
+
+I appreciate their discussion/justification of worker failure semantics. I also
+appreciate that they gave a nod (section 4.7) to ease of debuggability.
+
+==== Criticism ====
+
+It is not clear how the example in sections 2.1/2.2 generalises. It seems at
+first that the intermediate types [(k2,v2)] and (k2,[v2]) mean that O(n) reduces
+are called over the k2s, each performing O(n) work (for the v2s), making the
+interface useful only for O(n^2) computations. It was not until section 4.3 that
+I realised what the intent of this was. I wish in section 4.4 they gave some
+concrete examples of other input/output types.
+
+I see the fact that they punt on the issue of master failure as a substantial
+weakness. What if we wanted to generalise mapreduce to be used in a hierarchical
+computation - i.e., each worker thread itself starts another mapreduce job
+recursively? Then there would be enough masters that simply "restart that work
+element" might incur quite a high cost.
+
+==== Nitpicks ====
+
+It isn't clear why having M and R be much larger than the number of workers
+helps speed up recovery when a worker fails (section 3.5).
+
+What settings did they adjust / decide on to "tune" the backup tasks mechanism
+to not increase the computational demand by too much?
+
+I would have appreciated a discussion of what properties of algorithms make them
+suitable for being map-reduced.
+
+I feel like this paper is a lot "smaller" than the dryad paper. The font size
+is larger, there is tons of whitespace padding between sections, etc.

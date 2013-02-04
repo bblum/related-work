@@ -1,0 +1,51 @@
+Ben Blum <bblum@andrew.cmu.edu>
+15-712
+
+Isard'07, Dryad
+
+I read/skimmed this paper two hours before class so don't expect this review to
+hit very deeply.
+
+==== Praise ====
+
+The introduction does a great job giving a general sense of what it's like to
+program in dryad, and how it's different from other systems (execution resources
+not known at coding time, specify what subroutines are at each node like piping,
+use arbitrarily many input and output sets).
+
+Figure 3 is super helpful.
+
+I agree with them about the channel type abstraction-breaking thing (section
+3.4) being a worthwhile tradeoff. Good justification.
+
+I like the way they say they provide a map/reduce interface on top of their more
+general library.
+
+Overall I quite like this paper. It's sort of a deconstruction of mapreduce,
+breaking down the "magic abstraction" into something grittier, more complicated,
+but also much more flexible and expressive, which neatly addresses the main
+complaint I had with mapreduce. I think they're aiming their language design at
+just the right level of abstraction.
+
+==== Criticism ====
+
+I found no major bone to pick with this paper.
+
+==== Nitpicks ====
+
+When using ">=" (e.g. in "AS >= BS") I take it the lists of nodes on either side
+have to be the same length as each other? Do they also have to have one output
+each? (i.e., "(AS >= BS) >= (CS >= DS)" doesn't seem to make sense, but "(AS >=
+BS) >> (CS >= DS)" does.) It seems like a bit of type-checking could help here.
+
+Wow, why don't all conferences use a sans-serif font for figure captions? This
+is the best thing since bold section headers.
+
+How does the event-based programming style work? Can you write an event-loop
+waiting for events from (one or more) parent nodes in the graph, or do the
+events come from somewhere else? It seems like the synchronous method already
+enables good pipelining, so what does this get in addition?
+
+I'm unhappy with their related work claim that dryad "should have a faster
+learning curve" than functional languges like haskell because it's based on C++,
+but not in a way that I can articulate into a real criticism.
