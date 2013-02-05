@@ -1,0 +1,40 @@
+Ben Blum <bblum@andrew.cmu.edu>
+15-712
+
+Akamai
+
+==== Praise ====
+
+I like the idea of having the edge servers parse and prefetch HTML pages to
+create the illusion that the edge server itself is hosting the website. I'd like
+to see an analysis of cases this is good for vs cases where it fails due to
+either not prefetching the right thing or prefetching too many things.
+
+Since this is a high-level paper, almost a "survey" of various topics akamai has
+worked on each of which could maybe be its own paper, it's not clear what, if
+any, evaluation experiments would be relevant. However, the customer benefits
+and results section seems to neatly fill this gap -- justifying the niche they
+claim to fill without necessarily having anything to compare against.
+
+==== Criticism ====
+
+My major question so far is "How do the content distribution servers actually
+know what content to cache to begin with?" If I upload a video to youtube, which
+anyone might want to watch from around the world, does it immediately get copied
+to an akamai edge server in each corner of the world?
+
+The concrete contribution of this paper is not clear. All I knew going into it
+was that it's a writeup of how they serve content, but with no hints as to what
+particular tricks and techniques they use to make their system any good. For
+example, in section 6.1, they mention conducting races for real-time path
+optimisation -- this is such a technique; I'd have preferred to see the paper
+present their collection of all such techniques, rather than be structured based
+on motivating needs with their solutions as incidental points buried in the
+paragraphs.
+
+==== Nitpicks ====
+
+Essentially half the paper is motivation rather than explaining how their system
+architecture actually works. Through section 5 they've talked only about what
+challenges their architecture helps address, waving their hands over gritty
+design details. I see this as pretty frivolous.
