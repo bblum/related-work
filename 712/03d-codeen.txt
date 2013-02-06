@@ -1,0 +1,33 @@
+Ben Blum <bblum@andrew.cmu.edu>
+15-712
+
+Codeen (usenix 04)
+
+==== Praise ====
+
+I appreciate their discussion of the various different things that can go
+wrong - from security abuses to the limitations of each of their different
+type of heartbeat messages.
+
+==== Criticism ====
+
+The first figure shows that clients have to configure a specific node in their
+web browser. Does this mean the client will henceforth use that node for the
+rest of their traffic? It seems like it'd be better to have an initial service
+where any codeen node could redirect a client, such as "here, you appear to be
+geographically closest to node XYZ" -- a little more like akamai, still
+without needing to be in control of the entire internet to achieve.
+
+Either I misunderstand what codeen does at its core, or I would call it more
+of a proxy farm than a content distribution network. It seems to me like the
+main difference is whether subsets of the CDN's machines are dedicated to
+particular websites (e.g., amazon purchases a bunch of akamai's storage,
+bandwidth, etc to serve their specific content), as opposed to this paper's
+strategy, where any component of the network (i.e. the proxy server one client
+is connected to) can be used for connecting to any remote location.
+
+==== Nitpicks ====
+
+Since this paper came 6 years before the akamai paper, how much do they mean
+"akamai" when they mention comparing against commercial systems? The related
+work is not clear on this.
