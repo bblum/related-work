@@ -3,7 +3,28 @@ Ben Blum <bblum@andrew.cmu.edu>
 
 ==== Praise ====
 
+It's good that the paper discusses what attackers are still capable of achieving
+- e.g., taking over as a master DE and disrupting performance - and how that can
+be mitigated / recovered from.
+
+The discussion in section 3.6 of why it might be better to not logically
+separate two of the planes (acknowledging the tradeoff) is welcome -- until
+then, I had been wondering why the planes needed to be logically separated and
+whether not separating two planes could allow for better performance.
+
 ==== Criticism ====
 
+The binary-moded security model ("network admins can choose which one they
+want") worries me -- it seems like instead of being all-or-nothing with security
+guarantees, there could be some sort of sliding scale of robustness, where the
+network admin could choose to activate/deactivate specific security features or
+tune the performance characteristics of each one (e.g., how frequently the
+backup DEs poll for a compromised master).
+
 ==== Nitpicks ====
+
+The link flapping experiment doesn't discuss how much time is needed for the
+path to be recomputed. This makes me wonder if there's a particular frequency
+where if the link flaps faster than that, the path cannot be recomputed in time
+for performance to stay reasonable.
 
