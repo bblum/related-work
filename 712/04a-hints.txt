@@ -1,0 +1,4 @@
+Ben Blum <bblum@andrew.cmu.edu>
+15-712
+
+Hints for computer system design

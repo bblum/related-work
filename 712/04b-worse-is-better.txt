@@ -1,0 +1,19 @@
+Ben Blum <bblum@andrew.cmu.edu>
+15-712
+
+Worse is Better
+
+This is some good cynical philosophy. It's much like a discussion I was having
+over dinner last night, in which two friends and I talked about how PL research
+systems research, and security research have (respectively) decreasingly less
+"tear it down and start from scratch" motivation and increasingly more "there's
+no changing people who will write and use bad software, and they collectively
+have all the money, so let's help them."
+
+I guess the major weakness of this work is 90% of the "better"s in it refer to
+software-evolutionary-advantage, i.e., "characteristic of software that has the
+best chance of surviving", though this isn't the same as "better for making
+the people who have to work with this software happy". The document isn't a call
+for programmers and researchers to work against this tension, which I would
+rather have seen!
+
