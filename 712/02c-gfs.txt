@@ -1,0 +1,38 @@
+Ben Blum <bblum@andrew.cmu.edu>
+15-712
+
+
+==== Praise ====
+
+I like the record-append operation in general; it represents a good
+separation-of-labour in terms of what the applications should have to worry
+about and what the filesystem should have to worry about. It reminds me of a
+SOSP'11 paper, "RacePRO", that found "process race conditions" where system
+calls, typically to filesystem objects, could race, and it seemed like better
+filesystem API design could eliminate those problems.
+
+I feel like section 7 (experiences) section is just an excuse for them to trade
+war stories and praise the open source community. I admire them for including
+it, instead of cutting it to make room for "more important" things.
+
+==== Criticism ====
+
+I worry about step 7 in the client write request process. The client request
+can fail if any replica disagrees, and the state is left *inconsistent*? By what
+mechanism is the application better equipped to resolve the inconsistency than
+relying on GFS to do it under the hood?
+
+I am glad they discuss what happens when the master goes down ("shadow masters"
+provide read-only copies), but I would also have liked to see a discussion of
+what happens if the master fails and doesn't come back -- do the shadows elect a
+new leader?
+
+==== Nitpicks ====
+
+Why is it better to push the data linearly rather than in a tree -- is there
+some advantage to maximizing the number of servers with a *complete* view of the
+data early on (even before the control has been done)?
+
+How does a snapshot request get from a client that receives it to the server?
+What happens with multiple simultaneous snapshot requests from different
+clients?

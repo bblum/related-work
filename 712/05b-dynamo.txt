@@ -1,0 +1,41 @@
+Ben Blum <bblum@andrew.cmu.edu>
+15-712
+
+Dynamo
+
+================
+==== Praise ====
+================
+
+Right off the bat (in the abstract) they're telling us what tradeoff Dynamo has
+made to distinguish itself as an advancement (i.e., sacrifice consistency for
+availability). I wish more papers were this up-front.
+
+In 4.4, I am glad for their explanation of how e.g. deleted items can resurface
+due to failures and branching, and for their treatment of the limitations of
+vector clocks. However I wish they'd given a more technical preseentation of the
+delete-from-cart example in particular; specifically, why is it that deleted
+items resurfacing is the only threat?
+
+I think the paper is a lot stronger for how thoroughly they discussed adjusting
+dynamo's R/W/N values.
+
+===================
+==== Criticism ====
+===================
+
+I can't think of any major bone to pick with this paper. It covered all its
+bases pretty solidly, at least at the moderate depth I read it at.
+
+==================
+==== Nitpicks ====
+==================
+
+Does the constant stress on 'always writeable' mean that sometimes the read
+success rate is sacrificed? Or just write consistency?
+
+In 4.5 when they say a write is successful if W-1 nodes respond, that seems
+inconsistent. I thought W was by definition the minimum.
+
+In figure 4 it's not clear what "99th percentile" means. 99th percentile on what
+distribution?

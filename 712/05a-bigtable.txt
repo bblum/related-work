@@ -1,0 +1,33 @@
+Ben Blum <bblum@andrew.cmu.edu>
+15-712
+
+BigTable
+
+================
+==== Praise ====
+================
+
+The system architecture description is quite clear; at no point did I feel lost
+about how the SSTables were involved. It seems a little bit analogous to a
+log-structured filesystem to me.
+
+I think their evaluation section is quite good. All the benchmarks are explained
+and reasoned about in detail, and the performance pitfalls are adequately
+discussed.
+
+===================
+==== Criticism ====
+===================
+
+It's not clear to me what the limitations of bigtable's 2-dimensional indexing
+are. The column-family thing seems to generate an ad-hoc third dimension -- why
+is that not represented as an actual third dimension? and is there no mechanism
+for getting additional dimensions when needed?
+
+This paper's narrative seems to be missing a component - namely, what is it that
+bigtable is improving upon? What, if anything, was google able to do with GFS
+and mapreduce *before* bigtable? Or was the research challenge simply to provide
+*any* relational database that works at GFS scale? The related work section
+especially gives the sense that bigtable is *less* advanced, at a feature-set
+level, than the state of the art, so this feels more like a tech talk than a
+research contribution paper.
