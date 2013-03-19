@@ -1,0 +1,39 @@
+Ben Blum <bblum@andrew.cmu.edu>
+15-712
+
+Time, Clocks, Ordering of Events
+
+================
+==== Praise ====
+================
+
+"A system is distributed if the message transmission delay is not negligible
+compared to the time between events in a single process." I like this
+definition, and hadn't thought of it that way before.
+
+The formulation of specific concepts / thoughts is very clear, even when making
+complicated statements -- for example, the logical structure of the ideas makes
+it easy to understand why a central scheduling algorithm for mutexes can't
+satisfy bounded waiting.
+
+Lamport does a good job of justifying, in asides, why his assumptions are valid
+and what you could do in their absence.
+
+===================
+==== Criticism ====
+===================
+
+Why is it necessary to order events totally? Intuitively, it seems more useful
+to leave concurrent events unrelated. It's not really clear why this enhancement
+is necessary for the mutual exclusion algorithm.
+
+==================
+==== Nitpicks ====
+==================
+
+The three mutual exclusion conditions listed on page 4 are the three I know by
+name as "mutual exclusion", "bounded waiting", and "progress". Was this paper
+written before this started being a common idea, or after (or was it the cause
+of it)?
+
+Not clear at all what footnote 7 means.
