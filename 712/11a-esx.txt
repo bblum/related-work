@@ -1,0 +1,72 @@
+Ben Blum <bblum@andrew.cmu.edu>
+15-712
+
+VMware ESX
+
+I read this paper a year and a half ago for 15-799. Here is an adapted/refreshed
+version of my review from then.
+
+================
+==== Praise ====
+================
+
+The paper is structured so as to present the basic low-level mechanisms of the
+memory management first, then later show how they more high-level algorithms are
+built on top of them. This makes the paper very easy to follow.
+
+The content-based sharing algorithm is described quite clearly. I wonder,
+though, what "more sophisticated" ways there are to scan pages than random
+scanning?
+
+===================
+==== Criticism ====
+===================
+
+TODO: rewrite this
+TODO: rewrite this
+TODO: rewrite this
+TODO: rewrite this
+TODO: rewrite this
+TODO: rewrite this
+TODO: rewrite this
+TODO: rewrite this
+TODO: rewrite this
+TODO: rewrite this
+TODO: rewrite this
+TODO: rewrite this
+TODO: rewrite this
+TODO: rewrite this
+TODO: rewrite this
+TODO: rewrite this
+TODO: rewrite this
+TODO: rewrite this
+TODO: rewrite this
+TODO: rewrite this
+TODO: rewrite this
+TODO: rewrite this
+TODO: rewrite this
+TODO: rewrite this
+TODO: rewrite this
+TODO: rewrite this
+TODO: rewrite this
+
+The description of ballooning mentioned that ESX can use any pages that the
+balloons allocate, but does not describe the process for ESX giving those pages
+back to the balloon, which presumably needs to happen before deflation.
+
+Balloon drivers polling once per second? That sounds very poor... seems like
+memory pressure can change drastically in less than a second's time. A machine
+under heavy load, esp. with multiple VMs (or perhaps only one VM, if the polls
+are staggered?) might suffer.
+
+For idle memory taxing, they mention that specific active/idle pages need not be
+identified individually as a defence for their statistical sampling approach. I
+would have liked to see a comparative implementation of such explicit page
+annotations to show that the random statistical sampling measures up reasonably
+to justify their approach of not knowing anything about the guest OS.
+
+The spike mentioned in idle memory tax tests for windows's zeroing thread: this
+might be worth investigating algorithmically? I can imagine several other
+potential use cases that would cause notionally-idle pages to continue being
+touched (e.g., what if the heap had a garbage collector thread?).
+
