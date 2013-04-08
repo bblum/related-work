@@ -2,3 +2,26 @@ Ben Blum <bblum@andrew.cmu.edu>
 15-712
 
 Hints for computer system design
+
+Some of the tips here have to be tempered with "...but only when your judgement
+says it's appropriate" (like, "don't generalize", "use only as much abstraction
+as is 'right'", etc), which I think takes away from the paper's punch, despite
+helping its thoroughness.
+
+Other tips are great, applicable in basically all cases - the sort of thing I've
+realised "Oh! I forgot to think about it this way!" after being stuck for
+particularly long trying to solve a problem. For example, "handle normal and
+worst cases separately" -- in low-level concurrency programming, this even gives
+rise to different sychronization primitives/protocols depending on which code
+paths are the 'normal' case. The other day I was arguing with some friends over
+how it's important for software to not restrict the uncommon case *too* much (in
+the sense of user-demanded functionalities) -- comparing git against svn, for
+example.
+
+Another interesting point of this paper is how some of the points have become
+stuff that we take for granted now; they've been sufficiently absorbed into the
+collective conscious that it makes me wonder what life must have been like
+before. For example, "dynamic translation" talking about good compiler design,
+separate compilation, etc.; "make actions atomic or restartable" is something
+we're taught in every distributed/operating systems class ever. It makes me
+wonder what this paper would be like if it were written today!

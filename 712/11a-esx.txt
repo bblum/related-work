@@ -22,51 +22,17 @@ scanning?
 ==== Criticism ====
 ===================
 
-TODO: rewrite this
-TODO: rewrite this
-TODO: rewrite this
-TODO: rewrite this
-TODO: rewrite this
-TODO: rewrite this
-TODO: rewrite this
-TODO: rewrite this
-TODO: rewrite this
-TODO: rewrite this
-TODO: rewrite this
-TODO: rewrite this
-TODO: rewrite this
-TODO: rewrite this
-TODO: rewrite this
-TODO: rewrite this
-TODO: rewrite this
-TODO: rewrite this
-TODO: rewrite this
-TODO: rewrite this
-TODO: rewrite this
-TODO: rewrite this
-TODO: rewrite this
-TODO: rewrite this
-TODO: rewrite this
-TODO: rewrite this
-TODO: rewrite this
-
 The description of ballooning mentioned that ESX can use any pages that the
 balloons allocate, but does not describe the process for ESX giving those pages
 back to the balloon, which presumably needs to happen before deflation.
 
-Balloon drivers polling once per second? That sounds very poor... seems like
-memory pressure can change drastically in less than a second's time. A machine
-under heavy load, esp. with multiple VMs (or perhaps only one VM, if the polls
-are staggered?) might suffer.
+I think it's a mistake to have the balloon drivers poll once per second (or poll
+at all). If there are big swings in memory pressure that last less than a
+second, the ballooning won't be doing any good. This would be especially bad on
+systems running multiple ballooning VMs at once.
 
-For idle memory taxing, they mention that specific active/idle pages need not be
-identified individually as a defence for their statistical sampling approach. I
-would have liked to see a comparative implementation of such explicit page
-annotations to show that the random statistical sampling measures up reasonably
-to justify their approach of not knowing anything about the guest OS.
-
-The spike mentioned in idle memory tax tests for windows's zeroing thread: this
-might be worth investigating algorithmically? I can imagine several other
-potential use cases that would cause notionally-idle pages to continue being
-touched (e.g., what if the heap had a garbage collector thread?).
-
+The spike mentioned in the idle memory tax tests points at something of a deeper
+problem: Windows's ZPT is an example of where "notionally idle pages" don't line
+up with what their detector judges to be idle. I could see this coming up in
+other applications, e.g. if you're running a language with a concurrent garbage
+collector, there would be a "GC thread" that touches tons of actually-idle memory.
