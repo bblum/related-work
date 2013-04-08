@@ -109,6 +109,12 @@
 
 
 \section{Other}
+\subsection{Bug Arch\ae{}ology}
+\begin{itemize}
+	\item \cite{evolution} is a study of linux file system evolution. They analysed over 5000 patches on six common linux filesystems: ext3, ext4, reiserfs, jfs, xfs, and btrfs, and classified them according to multiple metrics: bugfix/performance/enhancement/reliability, common-case/failure-path, type of data structure involved, etc.
+		Main observations include: 40\% of bugs were in failure-path code, semantic bugs (i.e. domain knowledge to fix) are over 50\% of bugs (with concurrency bugs in second place - 20\%), 50\% of all patches are maintenance, and B-trees are relatively unlikely to have bugs compared to other data structures.
+		The intended impact of the paper is not crystal-clear, though they claim it should influence tool- and language-designers and developers.
+\end{itemize}
 
 \section{Future Reading}
 \begin{itemize}
