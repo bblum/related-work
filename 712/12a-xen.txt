@@ -1,0 +1,48 @@
+Ben Blum <bblum@andrew.cmu.edu>
+15-712
+
+Xen and the Art of Archery
+
+Like the ESX paper, this is also a paper that I read for 15-799. Here is an
+adapted/refreshed version of my review from then.
+
+================
+==== Praise ====
+================
+
+Their main rationale is that full virtualisation - in which the guest kernel
+may run unmodified - sacrifices too much in the way of performance in favour of
+convenience. Xen, instead, requires "small" modifications to the guest kernel
+to make for more efficient interaction between the hypervisor and the guest.
+
+IMO this is a great approach to doing good research: it adds entirely new
+techniques to the community's collective repertoire, so future researchers can
+pick which ones work best for them (as opposed to, e.g., putting
+microoptimisations on top of existing things that nobody will actually care to
+duplicate in their own work).
+
+I also appreciate they way they provide guest kernels with views of both "real"
+and "virtual" resources, which enables the guest kernels to more appropriately
+deal with their performance concerns, instead of "stumbling along blindly".
+
+The paper does a good job talking about the problems/requirements of running
+multiple virtualised guests (particularly, in protecting them from each other
+and the hypervisor from them). There is good description of what parts of the
+guest kernels need to be changed, from a high-level design perspective, and the
+description of benchmarking efforts is thorough.
+
+===================
+==== Criticism ====
+===================
+
+I thought the paper was more detailed/wordy than necessary. For example, the 
+introduction and the approach and overview sections each spent a lot of time
+explaining all the different types of virtualisation and how Xen compares and 
+contrasts with them; the detailed design section repeats much that is said
+previously (e.g., they mention the fact that an event-based system substitutes
+for hardware interrupts at least three times before they go into the specifics).
+
+Even though the performance numbers presented in the papers compare xen very
+favourably with nonvirtualised linux, they do not talk about I/O, and in that
+area (at least, so I am told) they take big performance hits.
+
