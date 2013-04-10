@@ -1,0 +1,40 @@
+Ben Blum <bblum@andrew.cmu.edu>
+15-712
+
+Mesos
+
+================
+==== Praise ====
+================
+
+They do a good job detailing the problem they're trying to solve & carving out
+a niche for themselves. The motivation is quick and it's clear why this is a
+contribution.
+
+Design philosophy, motivating goals, and components and implementation of their
+system are all laid out and explained clearly.
+
+To me it seems like this is an application of the same philosophy/motivation as
+virtualisation on individual machines, but now applied to large clusters.
+
+===================
+==== Criticism ====
+===================
+
+They mention in the introduction that there are two prior work approaches:
+static partitioning, and the more framework-specific ones that (I think) do
+approximately what mesos does but limited to homogeneous framework setups. But
+they only evaluate against static partitioning. I would also like to see an
+evaluation against framework-specific setups, so the reader can know "okay,
+mesos is not all that worse than the thing it's trying to be a generalisation
+of".
+
+In evaluation they show graphs for time taken to complete the four jobs, and
+also a graph for utilisation during the mesos-enabled run (which is, admirably,
+almost always at 100%). But there doesn't seem to be a similar analysis for
+total utilisation in the static partitioning run: the reader would have to piece
+together the data in the 4 graphs of figure 5 to try to figure out what that
+looked like.
+
+Also in figure 5(d), it seems mesos is a slight loss compared to static
+partitioning on torque, always lagging behind a little bit. Why's that?
