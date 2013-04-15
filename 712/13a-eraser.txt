@@ -1,0 +1,139 @@
+Ben Blum <bblum@andrew.cmu.edu>
+15-712
+
+Eraser
+
+================
+==== Praise ====
+================
+
+This paper is pretty much the seminal work in my field. As such, I have to thank
+it for being among the first to start laying down the principled "building
+block" ways of thinking about finding race conditions (the lockset technique is
+cited in hundreds and hundreds of papers to date).
+
+I appreciate the section on adapting the techniques to work in kernel-space, in
+part because that challenge is precisely what my master's thesis was about, and
+in part because it's always good to see a discussion of the limitations of the
+work. For the issue about post/wait-style synch primitives, I think adding
+happens-before detection would work fine for those, given sufficient annotation
+/ instrumentation of how the semaphores work.
+
+Interrupt-based synch, however, is more of a challenge (though one that my
+research project, Landslide, deals with just fine), but modern kernels have more
+advanced synch techniques still, such as RCU (whose semantics I'm not familiar
+enough with to judge how complicated it would be to deal with).
+
+As someone whose research focuses on building tools for an educational setting,
+I also appreciate the presence of the "undergrad coursework" evaluation section.
+
+"If the data race is Scylla, the deadlock is Charybdis" is a pretty cute quote.
+It's not all-encompassing in terms of race conditions in general, but speaks
+well to the problem that no single method can do race condition detection in the
+general case.
+
+===================
+==== Criticism ====
+===================
+
+I have three major beefs with this paper.
+
+(1)
+
+Right off the bat, they eschew the happens-before relation in favour of their
+own technique. While it's good to compare the effectiveness of the two
+techniques, lockset and happens-before are in fact orthogonal/complementary (see
+ThreadSanitizer, WBIA'09). In fact, it is necessary to augment lockset with
+happens-before to prevent a huge number of false positives when e.g. semaphores
+or condition variables are involved. (Also I think the claim in the caption of
+figure 2 is straight-up wrong.)
+
+(2)
+
+This is more of a personal irritation than a knock against the paper itself.
+They start by defining what it means to be a "data race", and say how they're
+focusing on those as a specific subclass of general concurrency errors (good!).
+But then in the rest of the paper they say "race" / "race condition" to refer to
+data races -- and this has had a major (and confusing) effect on the community's
+terminology: now when you want to talk about races that aren't data races, you
+have to say e.g. "concurrency errors" (for the whole class of nondeterminism
+bugs), or more specifically "atomicity violation" (see AVIO, ASPLOS '06) or
+"deadlock".
+
+I say this is a personal irritation because I have had one of my paper rejection
+reviews read, "[Your research] does not actually detect race conditions, as it
+claims to." simply because the reviewer thought I meant "data races" when I said
+"races".
+
+(3)
+
+Finally, while detecting data races based on lock-sets is demonstrably good at
+finding bugs, it is dangerous to novice programmers of concurrent code because
+it may teach them to think about things the wrong way. Consider this code, an
+obvious data race that leads to a segfault:
+
+    Thread 1            Thread 2
+    if (p != NULL)
+                        p = NULL;
+    output(p->data);
+
+Now what if we just put locks around all the accesses, which doesn't actually
+solve the problem? Eraser is defeated.
+
+    Thread 1            Thread 2
+    lock(mutex);
+    if (p != NULL)
+    unlock(mutex);
+                        lock(mutex);
+                        p = NULL;
+                        unlock(mutex);
+    lock(mutex);
+    output(p->data);
+    unlock(mutex);
+
+I have two stories to tell, lest this example seem too unbelievable/contrived.
+The first comes from when I worked at Mozilla, on Rust (an experimental new
+programming language.) Version 0.2 had just been released before I got there,
+and the release notes proudly proclaimed that the runtime (written in C++) was
+"Helgrind clean". Helgrind is a data-race detector built into valgrind that
+works much the same way as eraser, but with a little more sophistication.
+
+But. Not only did being helgrind-clean fail to guarantee the code was free of
+races, it *obscured* a race by encouraging the bad programming practice (above).
+When helgrind said the code was ok, the programmer stopped thinking about it.
+
+    bool rust_task::blocked() {
+        lock(this->lifecycle_lock);
+        bool is_blocked = this->state == task_state_blocked;
+        unlock(this->lifecycle_lock);
+        return is_blocked;
+    }
+
+While the memory access was performed with all the right locks held, the value
+returned wasn't protected and could be invalidated as soon as the function
+returned. The return value of this function was "sometimes" meaningless.
+
+(I originally told this story on my research blog,
+http://winningraceconditions.blogspot.com/2012/10/what-is-data-race-and-when-is-race-not.html )
+
+The second story is secondhand from my friend Michael Sullivan (both of us have
+TAed 15-410, cmu's undergrad OS class, multiple times). He tells of when he was
+at PLDI, and some speaker was telling about their "lock insertion" tool, which
+would analyse a codebase for data races and then automatically insert locks to
+fix them ("Automated Atomicity - Violation Fixing"). 
+
+During the questions section, an audience member asked: "So, can I write my code
+with no locks at all, and then run your tool, and have a correct program?" The
+speaker apparently said "Well, I don't think the tool is robust enough yet" --
+which, while perhaps true, doesn't admit the inherent shortcoming of the
+research, which is that the state of the art in race detection doesn't come at
+all close to reliably producing correct programs. (Sully later tracked down the
+one who asked the question, and taught them the real deal about data races.)
+
+---
+
+The long and short of all this is that, while lockset-based racefinding is
+certainly effective (and the paper is certainly legitimate for showing results
+in that), it is a heuristic at best, and I would only use it as a small
+building-block in a much more sophisticated tool, and I think the paper doesn't
+pay enough credit to this limitation for the seminal work that it is.
