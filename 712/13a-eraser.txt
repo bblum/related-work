@@ -92,35 +92,12 @@ solve the problem? Eraser is defeated.
     unlock(mutex);
 
 I have two stories to tell, lest this example seem too unbelievable/contrived.
-The first comes from when I worked at Mozilla, on Rust (an experimental new
-programming language.) Version 0.2 had just been released before I got there,
-and the release notes proudly proclaimed that the runtime (written in C++) was
-"Helgrind clean". Helgrind is a data-race detector built into valgrind that
-works much the same way as eraser, but with a little more sophistication.
-
-But. Not only did being helgrind-clean fail to guarantee the code was free of
-races, it *obscured* a race by encouraging the bad programming practice (above).
-When helgrind said the code was ok, the programmer stopped thinking about it.
-
-    bool rust_task::blocked() {
-        lock(this->lifecycle_lock);
-        bool is_blocked = this->state == task_state_blocked;
-        unlock(this->lifecycle_lock);
-        return is_blocked;
-    }
-
-While the memory access was performed with all the right locks held, the value
-returned wasn't protected and could be invalidated as soon as the function
-returned. The return value of this function was "sometimes" meaningless.
-
-(I originally told this story on my research blog,
-http://winningraceconditions.blogspot.com/2012/10/what-is-data-race-and-when-is-race-not.html )
-
-The second story is secondhand from my friend Michael Sullivan (both of us have
+The first story is secondhand from my friend Michael Sullivan (both of us have
 TAed 15-410, cmu's undergrad OS class, multiple times). He tells of when he was
 at PLDI, and some speaker was telling about their "lock insertion" tool, which
 would analyse a codebase for data races and then automatically insert locks to
-fix them ("Automated Atomicity - Violation Fixing"). 
+'fix' them (i.e., make them not data races anymore) ("Automated Atomicity -
+Violation Fixing"). 
 
 During the questions section, an audience member asked: "So, can I write my code
 with no locks at all, and then run your tool, and have a correct program?" The
@@ -129,6 +106,33 @@ which, while perhaps true, doesn't admit the inherent shortcoming of the
 research, which is that the state of the art in race detection doesn't come at
 all close to reliably producing correct programs. (Sully later tracked down the
 one who asked the question, and taught them the real deal about data races.)
+
+The second story comes from when I worked at Mozilla, on Rust (an experimental
+new programming language). Version 0.2 had just been released before I got
+there, and the release notes proudly proclaimed that the runtime (written in
+C++) was "Helgrind clean". Helgrind is a data-race detector built into valgrind
+that works much the same way as eraser, but with a little more sophistication.
+
+But. Not only did being helgrind-clean fail to guarantee the code was free of
+races, it *obscured* several races by encouraging the bad programming practice
+(above). When helgrind said the code was ok, the programmer stopped thinking
+about it.
+
+    bool rust_task::blocked() {
+        lock(this->lifecycle_lock);
+        bool is_blocked = this->state == task_state_blocked;
+        unlock(this->lifecycle_lock);
+        return is_blocked;
+    }
+
+Here, while the memory access was performed with all the right locks held, the
+value returned wasn't protected and could be invalidated as soon as the
+function returned. The return value of this function was "sometimes"
+meaningless.
+
+(I originally told this story on my research blog,
+http://winningraceconditions.blogspot.com/2012/10/
+    what-is-data-race-and-when-is-race-not.html )
 
 ---
 
