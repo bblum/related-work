@@ -1,0 +1,26 @@
+Ben Blum <bblum@andrew.cmu.edu>
+15-712
+
+FAWN
+
+================
+==== Praise ====
+================
+
+The paper is organised well, and easy to follow (and easy to skip over sections
+while knowing generally what you missed).
+
+I'm not sure whether this is one of the first papers to tackle the issue of
+energy-aware cluster computing, but section 2 makes it read like one. And I
+would guess it's the first to pitch the "queries per joule" issue in a way
+that'd sound attractive to people from industry, playing to concerns of energy
+bills from datacentres, etc etc. As such section 2 is really strong.
+
+===================
+==== Criticism ====
+===================
+
+In the intro they discuss a bound on how long a key range can stay locked during
+a node failure, but I don't see a corresponding experiment for that in the
+evaluation section. Also I wonder what's the key range lock time for when
+multiple nodes fail -- is there just more downtime, or data-loss, or...?
