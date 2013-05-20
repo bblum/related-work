@@ -115,6 +115,14 @@
 		Main observations include: 40\% of bugs were in failure-path code, semantic bugs (i.e. domain knowledge to fix) are over 50\% of bugs (with concurrency bugs in second place - 20\%), 50\% of all patches are maintenance, and B-trees are relatively unlikely to have bugs compared to other data structures.
 		The intended impact of the paper is not crystal-clear, though they claim it should influence tool- and language-designers and developers.
 \end{itemize}
+\subsection{Testing Techniques Comparison}
+\begin{itemize}
+	\item A master's thesis from amsterdam~\cite{randomboundedexhaustive} pits random testing and ``bounded exhaustive testing'' against each other to measure their relative effectiveness at finding bugs. In the scope of their thesis, the strategies refer to different ways of selecting values from the space of possible inputs to the program under test, though the analogy to concurrency state spaces or symbolic execution state spaces is straightforward.
+
+		Their statement that the motivation for bounded exhaustive testing is the hypothesis that most bugs can be found with small and simple test cases (which I disagree with on the surface level\footnote{...similar though it may seem to observation 3 in section 7.3.2 of \cite{Landslide} -- the difference is that I advocate using the observed pattern as a heuristic for exploration ordering, while here they advocate relying on it to assure correctness when stopping exploration early.}) belies an underlying assumption: no modifications may be made to the test setup to give exhaustive testing any hope of covering a significant fraction of the state space.
+
+		A major weakness of this study is that the comparison is performed based on tests of only one piece of software (the programming language Rascal). The work would be stronger if it explored different types of state spaces and identified properties of state spaces that favour one testing strategy over the other.
+\end{itemize}
 
 \section{Future Reading}
 \begin{itemize}
