@@ -1,0 +1,27 @@
+Ben Blum (bblum)
+15-869 paper review #0
+2013-09-10
+
+The paper describes Direct3D 10, a graphics pipeline architecture. The author
+focuses in particular on how version 10 is an improvement over version 9. There
+appears to be emphasis on "tightening" the coupling between the pipeline's API
+and the hardware's capabilities, which reduces "surprise" performance overhead
+incurred when translating a sequence of API calls into hardware instructions.
+
+Direct3D 10 introduces some new parts to the processing pipeline, most
+importantly (apparently) the geometry shader and the stream output. The geometry
+shader can compute the vertices for a set of output primitives given the
+vertices of a single input primitive. The stream output can control where the
+results from the geometry shader end up - in one single buffer or separated
+across up to 4 buffers for parallelism.
+
+I wasn't able to figure out the motivation for the geometry shader. What is the
+advantage of a pipeline stage that turns a single primitive shape into a series
+of many ones (that is, what sort of example computation can this express)? What
+is the deal with "adjacent vertices"?
+
+The evaluation section seems lacking, although the microbenchmark figures are
+very flashy. I feel like a full evaluation would need to analyze the runtimes of
+entire programs, not just individual instructions, to prove to the reader that
+the pipeline is efficient in processing all different types of instructions at
+once.
