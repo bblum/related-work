@@ -1,0 +1,23 @@
+Ben Blum (bblum)
+15-869 paper review #1
+2013-09-10
+
+Pomegranate is a parallelizing graphics pipeline that, as opposed to the
+abstract pipelines we reviewed in class on wednesday, sorts many times in
+between several stages of the pipeline. They also support heterogeneous networks
+of processors (where some pipelines may be slower than others), and claim 87% to
+99% efficiency of parallelism with a (seemingly-arbitrary) 64-pipeline maximum.
+The inter-pipeline network also does loadbalancing.
+
+Why do they claim 64 pipelines is the maximum? I saw no reason given in the
+paper; is it just because parallelism-efficiency drops off sharply after that?
+
+The architecture requires changes at both the software and hardware level, so
+they additionally had to use a hardware simulator for evaluation. In general the
+evaluation section is really good, analyzing the reasons for small discrepancies
+in their graphs, and providing an honest comparison against a bunch of different
+sort-once approaches.
+
+In the evaluation section they remark that the March benchmark doesn't require
+any ordering between cubes that don't occlude each other. Why is this remark not
+vacuous? Seems like that would be true of any workload ever.
